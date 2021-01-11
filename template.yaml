@@ -11,10 +11,10 @@ Globals:
     Timeout: 3
 
 Resources:
-  fakeapi-get:
+  fakeapiGet:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: fakeapi-get/
+      CodeUri: fakeapiGet/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Events:
@@ -29,11 +29,11 @@ Outputs:
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   FakeApi-CC:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Description: "API Gateway endpoint URL for prod stage for Fake API"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/person/"
   fakeapi-get:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt fakeapi-get.Arn
-  HelloWorldFunctionIamRole:
+    Description: "Fake API Lambda Function ARN"
+    Value: !GetAtt fakeapi-Get.Arn
+  fakeapi-get-IamRole:
     Description: "Implicit IAM Role created for fakeapi-get function"
-    Value: !GetAtt fakeapi-get-role.Arn
+    Value: !GetAtt fakeapi-Get-IamRole.Arn
