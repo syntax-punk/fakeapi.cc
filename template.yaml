@@ -11,29 +11,46 @@ Globals:
     Timeout: 3
 
 Resources:
-  fakeapi-get:
+  FakeApiCC:
+    Type: AWS::Serverless::Api
+    Properties:
+      EndpointConfiguration: REGIONAL
+      StageName: prod
+      Domain:
+        DomainName: fakeapi.cc
+        BasePath: /
+        CertificateArn: arn:aws:acm:eu-central-1:414914934686:certificate/4b7cd14c-745a-49ea-99e9-057c85e3b0ee
+        SecurityPolicy: TLS_1_2
+        EndpointConfiguration: REGIONAL
+        Route53:
+          HostedZoneId: Z02746382ABU3MIBA55E
+
+  GetPerson:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: fakeapi-get/
+      CodeUri: src/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
+      Role: arn:aws:iam::414914934686:role/service-role/fakeapi-get-role
       Events:
-        FakeApi-CC:
+        ApiEvent:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /person
             Method: get
+            RestApiId: 
+              Ref: FakeApiCC
 
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  FakeApi-CC:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/person/"
-  fakeapi-get:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt fakeapi-get.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for fakeapi-get function"
-    Value: !GetAtt fakeapi-get-role.Arn
+# Outputs:
+#   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+#   # Find out more about other implicit resources you can reference within SAM
+#   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+#   FakeApiCC:
+#     Description: "API Gateway endpoint URL for prod stage for Fake API"
+#     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/person/"
+#   fakeapiGet:
+#     Description: "Fake API Lambda Function ARN"
+#     Value: !GetAtt fakeapiGet.Arn
+#   fakeapiGetRole:
+#     Description: "Implicit IAM Role created for fakeapi-get function"
+#     Value: !GetAtt arn:aws:iam::414914934686:role/service-role/fakeapi-get-role
