@@ -15,58 +15,48 @@ let response;
  * 
  */
 'use strict';
-console.log('Loading hello world function');
  
-exports.lambdaHandler = async (event) => {
-    let name = "you";
-    let city = 'World';
-    let time = 'day';
-    let day = '';
-    let responseCode = 200;
-    console.log("request: " + JSON.stringify(event));
-    
-    if (event.queryStringParameters && event.queryStringParameters.name) {
-        console.log("Received name: " + event.queryStringParameters.name);
-        name = event.queryStringParameters.name;
-    }
-    
-    if (event.queryStringParameters && event.queryStringParameters.city) {
-        console.log("Received city: " + event.queryStringParameters.city);
-        city = event.queryStringParameters.city;
-    }
-    
-    if (event.headers && event.headers['day']) {
-        console.log("Received day: " + event.headers.day);
-        day = event.headers.day;
-    }
-    
-    if (event.body) {
-        let body = JSON.parse(event.body)
-        if (body.time) 
-            time = body.time;
-    }
- 
-    let greeting = `Good ${time}, ${name} of ${city}.`;
-    if (day) greeting += ` Happy ${day}!`;
+const faker = require('faker');
 
-    let responseBody = {
-        message: greeting,
-        input: event
-    };
+exports.lambdaHandler = async (event) => {
     
-    // The output from a Lambda proxy integration must be 
-    // in the following JSON object. The 'headers' property 
-    // is for custom response headers in addition to standard 
-    // ones. The 'body' property  must be a JSON string. For 
-    // base64-encoded payload, you must also set the 'isBase64Encoded'
-    // property to 'true'.
+    const responseBody = {};
+    let responseCode = 200;
+    
+
+    if (event.queryStringParameters && event.queryStringParameters.n.match(/^[1-9][0-9]?$|^100$/)) {
+        const amount = parseInt(event.queryStringParameters.n);
+        const dataList = [];
+        for (let i = 0; i < parseInt(amount); i++) {
+            dataList.push({
+                firstName: faker.name.firstName(),
+                lastName: faker.name.lastName(),
+                prefix: faker.name.prefix(),
+                address: faker.address.streetAddress(),
+                city: faker.address.city(),
+                phone: faker.phone.phoneNumber(),
+                jobTItle: faker.name.jobTitle(),
+                image: faker.image.avatar(),
+            });
+        }
+        responseBody.data = dataList; 
+    } else {
+       responseBody.data = {
+           firstName: faker.name.firstName(),
+           lastName: faker.name.lastName(),
+           prefix: faker.name.prefix(),
+           address: faker.address.streetAddress(),
+           city: faker.address.city(),
+           phone: faker.phone.phoneNumber(),
+           jobTItle: faker.name.jobTitle(),
+           image: faker.image.avatar(),
+       }
+    }
+    
     let response = {
         statusCode: responseCode,
-        headers: {
-            "x-custom-header" : "my custom header value"
-        },
         body: JSON.stringify(responseBody)
     };
-    console.log("response: " + JSON.stringify(response))
+    
     return response;
 };
