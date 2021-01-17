@@ -22,7 +22,6 @@ exports.lambdaHandler = async (event) => {
     
     const responseBody = {};
     let responseCode = 200;
-    
 
     if (event.queryStringParameters && event.queryStringParameters.n.match(/^[1-9][0-9]?$|^100$/)) {
         const amount = parseInt(event.queryStringParameters.n);
