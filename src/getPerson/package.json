@@ -1,10 +1,10 @@
 {
-  "name": "fakeapi-get",
+  "name": "fakeapi-getPeron",
   "version": "1.0.0",
-  "description": "hello world sample for NodeJS",
-  "main": "app.js",
+  "main": "index.js",
+  "description": "Randomly generated data, supporting your app with fake data.",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
-  "author": "SAM CLI",
+  "author": "theVoogie",
   "license": "MIT",
   "dependencies": {
     "faker": "^5.1.0"

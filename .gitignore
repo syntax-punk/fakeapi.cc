@@ -130,3 +130,5 @@ $RECYCLE.BIN/
 
 # Custom
 .aws-sam/
+node_modules/
+/**/*/node_modules
