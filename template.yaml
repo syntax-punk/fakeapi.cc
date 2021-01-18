@@ -86,6 +86,25 @@ Resources:
         ENVIRONMENT: !Ref: RunEnvironment
         Dummy_Spec_Feature1: !FindInMap [SomeDummySpecialFeature1, !Ref RunEnvironment, status]
 
+  AboutFakeApi:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/about
+      Handler: index.handler
+      Role: arn:aws:iam::414914934686:role/service-role/fakeapi-get-role
+      Events:
+        ApiEvent:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /about
+            Method: get
+            RestApiId: 
+              Ref: FakeApiCC
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref: RunEnvironment
+        Dummy_Spec_Feature1: !FindInMap [SomeDummySpecialFeature1, !Ref RunEnvironment, status]
+
 # Outputs:
 #   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
 #   # Find out more about other implicit resources you can reference within SAM

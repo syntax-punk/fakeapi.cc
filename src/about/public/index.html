@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About FakeAPI.cc</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Open Sans", sans-serif;
+    }
+    pre {
+      font-family: monospace;
+    }
+    html, body, main {
+      height: 100%;
+      width: 100%;
+    }
+    body{
+      padding: 16px;
+    }
+    main {
+      border: 24px solid #f7f7f7;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    h1 {
+      margin: 32px auto;
+      width: 260px;
+    }
+    article {
+      width: 640px;
+      padding: 8px;
+      margin: 24px auto;
+      text-align: justify;
+      font-size: 14pt;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>ABOUT FakeAPI</h1>
+    <section>
+      <article>
+        Sometimes when developing frontend app a developer needs quickly build a POC via calling some RestAPI to get data and display it in one way or another. Usually we spend some time to build some local server or something else which supports with data. FakeAPI is designed to save a developer some time. it takes care for "fake" RestAPI part which allows a developer to focus on the code.
+        At the moment we support following APIs: <span class="api-text">person</span> and <span class="api-text">location</span>.
+      </article>
+      <article>
+        In order to use one of the APIs, simply fire a HTTP GET call to one of the given apis, like so:
+        <pre>curl https://fakeapi.cc/person</pre> or
+        <pre>curl https://fakeapi.cc/location</pre>
+      </article>
+      <article>
+        I hope you'll find the service useful.
+      </article>
+    </section>
+  </main>
+</body>
+</html>
